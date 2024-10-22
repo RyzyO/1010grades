@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Grade Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input {
+            width: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<h2>COMP1010 Grades</h2>
+
+<!-- SGTA Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Week</th>
+            <th>SGTA Marks (0 to 1)</th>
+            <th>SGTA Marks Used (Best 8)</th>
+        </tr>
+    </thead>
+    <tbody id="sgta-table">
+        <tr><td>Week 1</td><td><input type="number" id="week1" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week1_used" disabled></td></tr>
+        <tr><td>Week 2</td><td><input type="number" id="week2" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week2_used" disabled></td></tr>
+        <tr><td>Week 3</td><td><input type="number" id="week3" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week3_used" disabled></td></tr>
+        <tr><td>Week 4</td><td><input type="number" id="week4" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week4_used" disabled></td></tr>
+        <tr><td>Week 5</td><td><input type="number" id="week5" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week5_used" disabled></td></tr>
+        <tr><td>Week 6</td><td><input type="number" id="week6" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week6_used" disabled></td></tr>
+        <tr><td>Week 7</td><td><input type="number" id="week7" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week7_used" disabled></td></tr>
+        <tr><td>Week 8</td><td><input type="number" id="week8" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week8_used" disabled></td></tr>
+        <tr><td>Week 9</td><td><input type="number" id="week9" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week9_used" disabled></td></tr>
+        <tr><td>Week 10</td><td><input type="number" id="week10" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week10_used" disabled></td></tr>
+        <tr><td>Week 11</td><td><input type="number" id="week11" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week11_used" disabled></td></tr>
+        <tr><td>Week 12</td><td><input type="number" id="week12" value="0" min="0" max="1" step="0.1" onchange="calculateSGTA()"></td><td><input type="number" id="week12_used" disabled></td></tr>
+    </tbody>
+</table>
+
+<h3>SGTA Total (Best 8): <span id="sgta-total">0</span></h3>
+<h3>SGTA Weighted: <span id="sgta-weighted">0</span></h3>
+
+<!-- Module Exams -->
+<h2>Module Exams</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Module Exam</th>
+            <th>Best Attempt (%)</th>
+            <th>Weighted</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Module Exam 1 (10%)</td>
+            <td><input type="number" id="exam1" value="0" onchange="calculateExams()"></td>
+            <td><span id="exam1-weighted">0</span></td>
+        </tr>
+        <tr>
+            <td>Module Exam 2 (10%)</td>
+            <td><input type="number" id="exam2" value="0" onchange="calculateExams()"></td>
+            <td><span id="exam2-weighted">0</span></td>
+        </tr>
+        <tr>
+            <td>Module Exam 3 (15%)</td>
+            <td><input type="number" id="exam3" value="0" onchange="calculateExams()"></td>
+            <td><span id="exam3-weighted">0</span></td>
+        </tr>
+        <tr>
+            <td>Module Exam 4 (15%)</td>
+            <td><input type="number" id="exam4" value="0" onchange="calculateExams()"></td>
+            <td><span id="exam4-weighted">0</span></td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Exam Total: <span id="exam-total">0</span></h3>
+
+<!-- Group Assignment Table -->
+<h2>Group Assignment</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Group Task (out of 20)</th>
+            <th>Viva (out of 10)</th>
+            <th>Weighted Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Group Task</td>
+            <td><input type="number" id="groupTask" value="0" min="0" max="20" onchange="calculateGroupAssignment()"></td>
+            <td><input type="number" id="viva" value="0" min="0" max="10" onchange="calculateGroupAssignment()"></td>
+            <td><span id="group-weighted">0</span></td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Group Assignment Total: <span id="group-total">0</span></h3>
+
+<!-- Total Unit Score -->
+<h2>Unit Total: <span id="unit-total">0</span></h2>
+
+<script>
+    function calculateSGTA() {
+        let marks = [];
+        let weeks = 12;
+
+        for (let i = 1; i <= weeks; i++) {
+            let mark = parseFloat(document.getElementById("week" + i).value) || 0;
+            marks.push(mark);
+        }
+
+        // Sort marks in descending order and sum the best 8 scores
+        marks.sort((a, b) => b - a);
+        let best8 = marks.slice(0, 8);
+
+        // Update the SGTA Marks Used column to show the best 8 scores
+        best8.forEach((mark, index) => {
+            document.getElementById("week" + (index + 1) + "_used").value = mark;
+        });
+
+        let totalSGTA = best8.reduce((acc, mark) => acc + mark, 0);
+
+        document.getElementById("sgta-total").textContent = totalSGTA.toFixed(2);
+
+        // Weighted SGTA is totalSGTA * 15
+        let weightedSGTA = totalSGTA * 2.5;
+        document.getElementById("sgta-weighted").textContent = weightedSGTA.toFixed(2);
+        
+        calculateTotal();
+    }
+
+    function calculateExams() {
+        let exams = [1, 2, 3, 4];
+        let totalExamScore = 0;
+
+        exams.forEach((exam) => {
+            let score = parseFloat(document.getElementById("exam" + exam).value) || 0;
+            let weighted = (exam === 1 || exam === 2) ? score * 0.1 : score * 0.15;
+            totalExamScore += weighted;
+            document.getElementById("exam" + exam + "-weighted").textContent = weighted.toFixed(2);
+        });
+
+        document.getElementById("exam-total").textContent = totalExamScore.toFixed(2);
+
+        calculateTotal();
+    }
+
+    function calculateGroupAssignment() {
+        let groupTask = parseFloat(document.getElementById("groupTask").value) || 0;
+        let viva = parseFloat(document.getElementById("viva").value) || 0;
+
+        // Calculate weighted scores
+        let weightedScore = (groupTask) + (viva) ;
+        document.getElementById("group-weighted").textContent = weightedScore.toFixed(2);
+        document.getElementById("group-total").textContent = weightedScore.toFixed(2);
+
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        let totalSGTA = parseFloat(document.getElementById("sgta-weighted").textContent) || 0;
+        let totalExams = parseFloat(document.getElementById("exam-total").textContent) || 0;
+        let totalGroup = parseFloat(document.getElementById("group-weighted").textContent) || 0;
+
+        // Total unit score
+        let unitTotal = totalSGTA + totalExams + totalGroup;
+        document.getElementById("unit-total").textContent = unitTotal.toFixed(2);
+    }
+
+    // Initial calculations
+    calculateSGTA();
+    calculateExams();
+    calculateGroupAssignment();
+</script>
+
+</body>
+</html>
